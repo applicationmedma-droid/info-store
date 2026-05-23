@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StreamPro — اشتراكات IPTV الاحترافية</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Space+Mono:wght@700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #050a12;
+    --bg2: #0a1220;
+    --bg3: #0f1a2e;
+    --accent: #00e5ff;
+    --accent2: #7c3aed;
+    --accent3: #f59e0b;
+    --text: #e2e8f0;
+    --muted: #64748b;
+    --border: rgba(0,229,255,0.12);
+    --card-bg: rgba(10,18,32,0.9);
+    --glow: 0 0 40px rgba(0,229,255,0.15);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Cairo', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* ---- ANIMATED GRID BG ---- */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,229,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,229,255,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ---- NAV ---- */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 4rem;
+    background: rgba(5,10,18,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo {
+    font-family: 'Space Mono', monospace;
+    font-size: 1.6rem;
+    color: var(--accent);
+    letter-spacing: -1px;
+    text-shadow: 0 0 20px rgba(0,229,255,0.5);
+  }
+
+  .logo span { color: var(--accent2); }
+
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+  }
+
+  nav a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: color 0.2s;
+  }
+
+  nav a:hover { color: var(--accent); }
+
+  .nav-cta {
+    background: var(--accent);
+    color: #000 !important;
+    padding: 0.5rem 1.4rem;
+    border-radius: 8px;
+    font-weight: 700 !important;
+    transition: box-shadow 0.2s, transform 0.2s !important;
+  }
+
+  .nav-cta:hover {
+    box-shadow: 0 0 20px rgba(0,229,255,0.4) !important;
+    transform: translateY(-1px);
+  }
+
+  /* ---- HERO ---- */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 7rem 2rem 4rem;
+    z-index: 1;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0,229,255,0.08);
+    border: 1px solid rgba(0,229,255,0.25);
+    color: var(--accent);
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 0.4rem 1rem;
+    border-radius: 100px;
+    margin-bottom: 2rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    animation: pulse-badge 2s infinite;
+  }
+
+  @keyframes pulse-badge {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(0,229,255,0.3); }
+    50% { box-shadow: 0 0 0 8px rgba(0,229,255,0); }
+  }
+
+  .dot-live {
+    width: 8px; height: 8px;
+    background: #22c55e;
+    border-radius: 50%;
+    animation: blink 1.2s infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.2; }
+  }
+
+  h1 {
+    font-size: clamp(2.8rem, 6vw, 5.5rem);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    max-width: 800px;
+  }
+
+  h1 .line1 { color: var(--text); }
+  h1 .line2 {
+    color: var(--accent);
+    text-shadow: 0 0 40px rgba(0,229,255,0.4);
+  }
+
+  .hero-sub {
+    font-size: 1.2rem;
+    color: var(--muted);
+    max-width: 560px;
+    line-height: 1.7;
+    margin-bottom: 2.5rem;
+  }
+
+  .hero-btns {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--accent), #0099bb);
+    color: #000;
+    font-family: 'Cairo', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    padding: 0.85rem 2.4rem;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0,229,255,0.35);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--text);
+    font-family: 'Cairo', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    padding: 0.85rem 2.4rem;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--accent);
+    background: rgba(0,229,255,0.06);
+  }
+
+  /* ---- STATS STRIP ---- */
+  .stats {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: var(--bg2);
+    padding: 2rem 0;
+    overflow: hidden;
+  }
+
+  .stat-item {
+    flex: 1;
+    text-align: center;
+    padding: 0.5rem 2rem;
+    border-left: 1px solid var(--border);
+  }
+
+  .stat-item:last-child { border-left: none; }
+
+  .stat-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--accent);
+    display: block;
+    text-shadow: 0 0 15px rgba(0,229,255,0.3);
+  }
+
+  .stat-label {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  /* ---- SECTIONS ---- */
+  section {
+    position: relative;
+    z-index: 1;
+    padding: 6rem 4rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-tag {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+
+  .section-title {
+    font-size: clamp(1.8rem, 3vw, 2.8rem);
+    font-weight: 900;
+    color: var(--text);
+    margin-bottom: 1rem;
+    line-height: 1.2;
+  }
+
+  .section-sub {
+    color: var(--muted);
+    font-size: 1rem;
+    line-height: 1.7;
+    max-width: 560px;
+    margin-bottom: 3.5rem;
+  }
+
+  /* ---- FEATURES ---- */
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .feature-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem;
+    transition: border-color 0.3s, transform 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .feature-card:hover { border-color: rgba(0,229,255,0.3); transform: translateY(-4px); }
+  .feature-card:hover::before { opacity: 1; }
+
+  .feat-icon {
+    width: 52px; height: 52px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .feat-icon.cyan { background: rgba(0,229,255,0.1); }
+  .feat-icon.purple { background: rgba(124,58,237,0.15); }
+  .feat-icon.amber { background: rgba(245,158,11,0.1); }
+  .feat-icon.green { background: rgba(34,197,94,0.1); }
+
+  .feat-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.6rem;
+  }
+
+  .feat-desc {
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* ---- PLANS ---- */
+  #plans { max-width: 1200px; }
+
+  .plans-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+    align-items: stretch;
+  }
+
+  .plan-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 2.2rem 2rem;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .plan-card:hover { transform: translateY(-6px); }
+
+  .plan-card.featured {
+    border-color: var(--accent);
+    background: rgba(0,229,255,0.04);
+    box-shadow: 0 0 50px rgba(0,229,255,0.1);
+  }
+
+  .popular-badge {
+    position: absolute;
+    top: 1.2rem;
+    left: 1.2rem;
+    background: var(--accent);
+    color: #000;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 0.3rem 0.8rem;
+    border-radius: 100px;
+  }
+
+  .plan-name {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .plan-price {
+    font-family: 'Space Mono', monospace;
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+
+  .plan-price sup {
+    font-size: 1.2rem;
+    vertical-align: top;
+    margin-top: 0.5rem;
+    color: var(--muted);
+  }
+
+  .plan-period {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-bottom: 1.8rem;
+  }
+
+  .plan-divider {
+    height: 1px;
+    background: var(--border);
+    margin-bottom: 1.5rem;
+  }
+
+  .plan-features {
+    list-style: none;
+    flex: 1;
+    margin-bottom: 2rem;
+  }
+
+  .plan-features li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9rem;
+    color: var(--text);
+    padding: 0.45rem 0;
+  }
+
+  .check { color: var(--accent); font-size: 1rem; }
+  .cross { color: var(--muted); font-size: 1rem; }
+
+  .plan-btn {
+    display: block;
+    text-align: center;
+    padding: 0.9rem;
+    border-radius: 10px;
+    font-family: 'Cairo', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+
+  .plan-btn.outline {
+    border: 1px solid var(--border);
+    color: var(--text);
+    background: transparent;
+  }
+
+  .plan-btn.outline:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .plan-btn.solid {
+    background: var(--accent);
+    color: #000;
+    border: none;
+  }
+
+  .plan-btn.solid:hover {
+    box-shadow: 0 6px 25px rgba(0,229,255,0.4);
+    transform: translateY(-1px);
+  }
+
+  /* ---- CHANNELS ---- */
+  .channels-flex {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 2rem;
+  }
+
+  .ch-tag {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 0.5rem 1.1rem;
+    border-radius: 100px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all 0.2s;
+  }
+
+  .ch-tag:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(0,229,255,0.06);
+  }
+
+  /* ---- TESTIMONIALS ---- */
+  .testi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .testi-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.8rem;
+  }
+
+  .stars { color: var(--accent3); font-size: 1rem; margin-bottom: 1rem; }
+
+  .testi-text {
+    font-size: 0.95rem;
+    color: var(--text);
+    line-height: 1.7;
+    margin-bottom: 1.2rem;
+  }
+
+  .testi-author {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .avatar {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: var(--accent2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.9rem;
+  }
+
+  .author-name { font-size: 0.9rem; font-weight: 700; }
+  .author-loc { font-size: 0.8rem; color: var(--muted); }
+
+  /* ---- FAQ ---- */
+  .faq-list { display: flex; flex-direction: column; gap: 1rem; }
+
+  .faq-item {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .faq-q {
+    width: 100%;
+    background: none;
+    border: none;
+    color: var(--text);
+    font-family: 'Cairo', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    text-align: right;
+    padding: 1.3rem 1.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .faq-q:hover { color: var(--accent); }
+
+  .faq-arrow {
+    font-size: 1.2rem;
+    color: var(--muted);
+    transition: transform 0.3s;
+    flex-shrink: 0;
+  }
+
+  .faq-item.open .faq-arrow { transform: rotate(45deg); color: var(--accent); }
+
+  .faq-a {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.3s;
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.7;
+    padding: 0 1.5rem;
+  }
+
+  .faq-item.open .faq-a {
+    max-height: 200px;
+    padding: 0 1.5rem 1.3rem;
+  }
+
+  /* ---- CTA SECTION ---- */
+  .cta-section {
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    text-align: center;
+    padding: 6rem 2rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .cta-glow {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px; height: 300px;
+    background: radial-gradient(ellipse, rgba(0,229,255,0.08), transparent 70%);
+    pointer-events: none;
+  }
+
+  .cta-section h2 {
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 900;
+    margin-bottom: 1rem;
+    position: relative;
+  }
+
+  .cta-section p {
+    color: var(--muted);
+    font-size: 1.1rem;
+    margin-bottom: 2.5rem;
+    position: relative;
+  }
+
+  /* ---- FOOTER ---- */
+  footer {
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+    padding: 3rem 4rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .footer-copy { font-size: 0.85rem; color: var(--muted); }
+
+  .footer-links {
+    display: flex;
+    gap: 1.5rem;
+    list-style: none;
+  }
+
+  .footer-links a {
+    font-size: 0.85rem;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--accent); }
+
+  /* ---- SCROLL ANIMATIONS ---- */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ---- RESPONSIVE ---- */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    nav ul { display: none; }
+    section { padding: 4rem 1.5rem; }
+    .stats { flex-direction: column; }
+    .stat-item { border-left: none; border-bottom: 1px solid var(--border); }
+    .stat-item:last-child { border-bottom: none; }
+    footer { padding: 2rem 1.5rem; }
+    .footer-inner { flex-direction: column; text-align: center; }
+  }
+
+  /* ---- WHATSAPP FLOAT ---- */
+  .wa-float {
+    position: fixed;
+    bottom: 2rem;
+    left: 2rem;
+    z-index: 200;
+    background: #25d366;
+    color: #fff;
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .wa-float:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 30px rgba(37,211,102,0.6);
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Stream<span>Pro</span></div>
+  <ul>
+    <li><a href="#features">المميزات</a></li>
+    <li><a href="#plans">الباقات</a></li>
+    <li><a href="#channels">القنوات</a></li>
+    <li><a href="#faq">الأسئلة</a></li>
+    <li><a href="#plans" class="nav-cta">اشترك الآن</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">
+    <span class="dot-live"></span>
+    بث مباشر عالي الجودة · 24/7
+  </div>
+  <h1>
+    <span class="line1">أقوى سيرفر</span><br>
+    <span class="line2">IPTV في العالم العربي</span>
+  </h1>
+  <p class="hero-sub">
+    أكثر من 15,000 قناة حية وآلاف الأفلام والمسلسلات بجودة 4K بدون انقطاع — بسعر لا يُنافس.
+  </p>
+  <div class="hero-btns">
+    <a href="#plans" class="btn-primary">ابدأ الآن</a>
+    <a href="#features" class="btn-secondary">اعرف أكثر</a>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat-item">
+    <span class="stat-num">15K+</span>
+    <p class="stat-label">قناة حية</p>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">80K+</span>
+    <p class="stat-label">فيلم ومسلسل</p>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">99.9%</span>
+    <p class="stat-label">ضمان الاتصال</p>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">50K+</span>
+    <p class="stat-label">مشترك راضٍ</p>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">24/7</span>
+    <p class="stat-label">دعم فني</p>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section id="features">
+  <span class="section-tag">لماذا StreamPro</span>
+  <h2 class="section-title">كل ما تحتاجه في مكان واحد</h2>
+  <p class="section-sub">تقنية متطورة وبنية تحتية ضخمة لضمان أفضل تجربة مشاهدة ممكنة.</p>
+
+  <div class="features-grid">
+    <div class="feature-card fade-up">
+      <div class="feat-icon cyan">📡</div>
+      <div class="feat-title">جودة 4K Ultra HD</div>
+      <p class="feat-desc">بث بجودة 4K و Full HD لجميع القنوات المدعومة دون تقليل في الدقة.</p>
+    </div>
+    <div class="feature-card fade-up">
+      <div class="feat-icon purple">⚡</div>
+      <div class="feat-title">سرعة فائقة بدون تقطيع</div>
+      <p class="feat-desc">سيرفرات ضخمة موزعة حول العالم لضمان بث سلس دون buffering.</p>
+    </div>
+    <div class="feature-card fade-up">
+      <div class="feat-icon amber">📱</div>
+      <div class="feat-title">يعمل على كل الأجهزة</div>
+      <p class="feat-desc">Smart TV، Android، iOS، PC، MAG Box، وأي جهاز يدعم IPTV.</p>
+    </div>
+    <div class="feature-card fade-up">
+      <div class="feat-icon green">🔒</div>
+      <div class="feat-title">حماية وخصوصية تامة</div>
+      <p class="feat-desc">اتصال مشفر وبياناتك محمية. بدون تسجيل أو تتبع للنشاط.</p>
+    </div>
+    <div class="feature-card fade-up">
+      <div class="feat-icon cyan">📺</div>
+      <div class="feat-title">أرشيف ضخم</div>
+      <p class="feat-desc">الوصول لتسجيلات الأيام الماضية وأكثر من 80,000 فيلم ومسلسل.</p>
+    </div>
+    <div class="feature-card fade-up">
+      <div class="feat-icon purple">🛡️</div>
+      <div class="feat-title">دعم فني 24 ساعة</div>
+      <p class="feat-desc">فريق دعم متخصص عبر واتساب والإيميل على مدار الساعة طوال الأسبوع.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PLANS -->
+<section id="plans" style="max-width:1200px">
+  <span class="section-tag">اختر باقتك</span>
+  <h2 class="section-title">أسعار واضحة بدون مفاجآت</h2>
+  <p class="section-sub">باقات مرنة تناسب جميع الاحتياجات. يمكنك الترقية في أي وقت.</p>
+
+  <div class="plans-grid">
+    <!-- شهر -->
+    <div class="plan-card fade-up">
+      <div class="plan-name">شهر واحد</div>
+      <div class="plan-price"><sup>$</sup>7</div>
+      <div class="plan-period">لمدة 30 يوماً</div>
+      <div class="plan-divider"></div>
+      <ul class="plan-features">
+        <li><span class="check">✓</span> 15,000+ قناة حية</li>
+        <li><span class="check">✓</span> جودة Full HD</li>
+        <li><span class="check">✓</span> جهاز واحد</li>
+        <li><span class="check">✓</span> 80,000+ VOD</li>
+        <li><span class="cross">✗</span> أرشيف المباريات</li>
+        <li><span class="cross">✗</span> جودة 4K</li>
+      </ul>
+      <a href="#" class="plan-btn outline">اشترك الآن</a>
+    </div>
+
+    <!-- 3 أشهر -->
+    <div class="plan-card featured fade-up">
+      <div class="popular-badge">الأكثر طلباً</div>
+      <div class="plan-name">3 أشهر</div>
+      <div class="plan-price"><sup>$</sup>18</div>
+      <div class="plan-period">وفر 14% مقارنةً بالشهري</div>
+      <div class="plan-divider"></div>
+      <ul class="plan-features">
+        <li><span class="check">✓</span> 15,000+ قناة حية</li>
+        <li><span class="check">✓</span> جودة 4K Ultra HD</li>
+        <li><span class="check">✓</span> جهازَين في آنٍ واحد</li>
+        <li><span class="check">✓</span> 80,000+ VOD</li>
+        <li><span class="check">✓</span> أرشيف 7 أيام</li>
+        <li><span class="check">✓</span> دعم فني أولوية</li>
+      </ul>
+      <a href="#" class="plan-btn solid">اشترك الآن</a>
+    </div>
+
+    <!-- سنة -->
+    <div class="plan-card fade-up">
+      <div class="plan-name">سنة كاملة</div>
+      <div class="plan-price"><sup>$</sup>49</div>
+      <div class="plan-period">وفر 42% — أفضل قيمة</div>
+      <div class="plan-divider"></div>
+      <ul class="plan-features">
+        <li><span class="check">✓</span> 15,000+ قناة حية</li>
+        <li><span class="check">✓</span> جودة 4K Ultra HD</li>
+        <li><span class="check">✓</span> 3 أجهزة في آنٍ واحد</li>
+        <li><span class="check">✓</span> 80,000+ VOD</li>
+        <li><span class="check">✓</span> أرشيف 30 يوم</li>
+        <li><span class="check">✓</span> دعم VIP مخصص</li>
+      </ul>
+      <a href="#" class="plan-btn outline">اشترك الآن</a>
+    </div>
+  </div>
+</section>
+
+<!-- CHANNELS -->
+<section id="channels">
+  <span class="section-tag">تغطية عالمية</span>
+  <h2 class="section-title">آلاف القنوات من كل العالم</h2>
+  <p class="section-sub">من القنوات العربية إلى المحطات الرياضية العالمية — كل شيء في مكان واحد.</p>
+  <div class="channels-flex">
+    <span class="ch-tag">🇸🇦 السعودية</span>
+    <span class="ch-tag">🇩🇿 الجزائر</span>
+    <span class="ch-tag">🇲🇦 المغرب</span>
+    <span class="ch-tag">🇪🇬 مصر</span>
+    <span class="ch-tag">🇦🇪 الإمارات</span>
+    <span class="ch-tag">⚽ بي إن سبورتس</span>
+    <span class="ch-tag">⚽ OSN</span>
+    <span class="ch-tag">🎬 نتفليكس عربي</span>
+    <span class="ch-tag">🎬 MBC</span>
+    <span class="ch-tag">📡 BBC عربي</span>
+    <span class="ch-tag">📡 الجزيرة</span>
+    <span class="ch-tag">🇫🇷 فرنسا</span>
+    <span class="ch-tag">🇬🇧 المملكة المتحدة</span>
+    <span class="ch-tag">🇺🇸 الولايات المتحدة</span>
+    <span class="ch-tag">🏀 NBA</span>
+    <span class="ch-tag">🏆 UEFA</span>
+    <span class="ch-tag">🎮 ألعاب</span>
+    <span class="ch-tag">🧒 أطفال</span>
+    <span class="ch-tag">🎵 موسيقى</span>
+    <span class="ch-tag">📰 أخبار</span>
+    <span class="ch-tag">🍿 أفلام</span>
+    <span class="ch-tag">🎭 مسلسلات</span>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section>
+  <span class="section-tag">آراء عملائنا</span>
+  <h2 class="section-title">يثق بنا آلاف المشتركين</h2>
+  <p class="section-sub">تجارب حقيقية من عملاء راضين حول العالم العربي.</p>
+  <div class="testi-grid">
+    <div class="testi-card fade-up">
+      <div class="stars">★★★★★</div>
+      <p class="testi-text">أفضل سيرفر جربته. لا تقطيع إطلاقاً حتى في مباريات كأس العالم. الدعم الفني يرد في دقائق.</p>
+      <div class="testi-author">
+        <div class="avatar">خم</div>
+        <div>
+          <div class="author-name">خالد محمد</div>
+          <div class="author-loc">الرياض، السعودية</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card fade-up">
+      <div class="stars">★★★★★</div>
+      <p class="testi-text">مشترك منذ سنتين. الجودة 4K على تلفزيوني Samsung رهيبة. والأرشيف ميزة لا أستطيع العيش بدونها.</p>
+      <div class="testi-author">
+        <div class="avatar" style="background:#7c3aed">يب</div>
+        <div>
+          <div class="author-name">يوسف بن علي</div>
+          <div class="author-loc">الجزائر العاصمة</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card fade-up">
+      <div class="stars">★★★★★</div>
+      <p class="testi-text">سعر مناسب وخدمة ممتازة. جربت 3 مزودين قبلهم، StreamPro الأفضل بلا منافس. أنصح به بشدة.</p>
+      <div class="testi-author">
+        <div class="avatar" style="background:#f59e0b;color:#000">فز</div>
+        <div>
+          <div class="author-name">فاطمة الزهراء</div>
+          <div class="author-loc">الدار البيضاء، المغرب</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <span class="section-tag">أسئلة شائعة</span>
+  <h2 class="section-title">أجوبة على أسئلتك</h2>
+  <p class="section-sub">لم تجد جوابك؟ تواصل معنا عبر واتساب وسنرد فوراً.</p>
+  <div class="faq-list">
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        كيف أستلم الاشتراك بعد الدفع؟
+        <span class="faq-arrow">+</span>
+      </button>
+      <div class="faq-a">يتم إرسال بيانات الاشتراك (URL + اسم المستخدم + كلمة المرور) فورياً إلى واتساب أو إيميلك خلال دقائق من تأكيد الدفع.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        على أي أجهزة يعمل؟
+        <span class="faq-arrow">+</span>
+      </button>
+      <div class="faq-a">يعمل على جميع الأجهزة: Smart TV (Samsung, LG, Sony)، Android، iPhone، iPad، Windows، Mac، MAG Box، Firestick، وأي جهاز يدعم بروتوكول IPTV/M3U.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        هل هناك تجربة مجانية؟
+        <span class="faq-arrow">+</span>
+      </button>
+      <div class="faq-a">نعم، نقدم تجربة مجانية لمدة 24 ساعة. تواصل معنا عبر واتساب وسنرسل لك بيانات التجربة مباشرة.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        ما هي طرق الدفع المتاحة؟
+        <span class="faq-arrow">+</span>
+      </button>
+      <div class="faq-a">نقبل الدفع عبر: بطاقات فيزا وماستركارد، PayPal، USDT، CCP الجزائر، BaridiMob، ووسائل دفع أخرى حسب دولتك.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        ماذا لو انقطعت الخدمة أو واجهت مشكلة؟
+        <span class="faq-arrow">+</span>
+      </button>
+      <div class="faq-a">فريق الدعم الفني متاح 24/7 عبر واتساب. في حال أي انقطاع خارج عن إرادتنا يتجاوز ساعة، نضيف أياماً تعويضية مجانية لاشتراكك.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-section">
+  <div class="cta-glow"></div>
+  <h2>ابدأ المشاهدة اليوم 🚀</h2>
+  <p>سجل واستمتع بآلاف القنوات خلال دقائق.</p>
+  <a href="#plans" class="btn-primary" style="font-size:1.1rem;padding:1rem 3rem;">اختر باقتك الآن</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="logo" style="font-size:1.3rem">Stream<span>Pro</span></div>
+    <ul class="footer-links">
+      <li><a href="#">سياسة الخصوصية</a></li>
+      <li><a href="#">الشروط والأحكام</a></li>
+      <li><a href="#">تواصل معنا</a></li>
+    </ul>
+    <p class="footer-copy">© 2025 StreamPro. جميع الحقوق محفوظة.</p>
+  </div>
+</footer>
+
+<!-- WhatsApp Float -->
+<a href="https://wa.me/213XXXXXXXXX" class="wa-float" target="_blank" title="تواصل عبر واتساب">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.117 1.524 5.847L.057 23.17a.75.75 0 0 0 .921.921l5.323-1.467A11.953 11.953 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.96 0-3.807-.524-5.4-1.44l-.388-.226-3.158.87.869-3.156-.226-.388A10 10 0 1 1 12 22z"/></svg>
+</a>
+
+<script>
+function toggleFaq(btn) {
+  const item = btn.closest('.faq-item');
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+}
+
+// Scroll animations
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+// Animated counter
+function animateCounter(el, target, suffix='') {
+  let start = 0;
+  const duration = 2000;
+  const step = (timestamp) => {
+    if (!start) start = timestamp;
+    const progress = Math.min((timestamp - start) / duration, 1);
+    const val = Math.floor(progress * target);
+    el.textContent = (val >= 1000 ? (val/1000).toFixed(0)+'K' : val) + suffix;
+    if (progress < 1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+</script>
+</body>
+</html>
